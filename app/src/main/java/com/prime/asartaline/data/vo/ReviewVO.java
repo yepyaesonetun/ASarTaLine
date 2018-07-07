@@ -1,30 +1,37 @@
 package com.prime.asartaline.data.vo;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by yepyaesonetun on 7/6/18.
  **/
 
+@Entity(tableName = "reviews", foreignKeys = {@ForeignKey(entity = ShopVO.class, parentColumns = "shopId", childColumns = "shopId")},
+        indices = {@Index(value = "shopId")})
 public class ReviewVO {
-
-    @SerializedName("reviewId")
+    @NonNull
+    @PrimaryKey
     private String reviewId;
-
-    @SerializedName("review")
     private String review;
-
-    @SerializedName("userId")
     private String userId;
-
-    @SerializedName("userName")
     private String userName;
-
-    @SerializedName("userImage")
     private String userImage;
-
-    @SerializedName("timestamp")
     private String timestamp;
+    private String shopId;
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
 
     public String getReviewId() {
         return reviewId;

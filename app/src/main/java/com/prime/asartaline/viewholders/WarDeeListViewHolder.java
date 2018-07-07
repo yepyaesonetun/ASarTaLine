@@ -51,9 +51,9 @@ public class WarDeeListViewHolder extends BaseViewHolder<WarDeeVO> {
                 .load(data.getImages().get(0))
                 .into(ivWarDee);
 
-        tvName.setText(data.getName());
+        tvName.setText(data.getWarTeeName());
         tvTaste.setText(data.getGeneralTaste().get(0).getTaste());
-        tvPrice.setText(data.getPriceRangeMin() + " - " + data.getPriceRangeMax());
+        tvPrice.setText(data.getMinPrice() + " - " + data.getMaxPrice());
 
     }
 

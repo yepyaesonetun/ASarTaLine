@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.prime.asartaline.data.models.WarDeeModel;
-import com.prime.asartaline.data.vo.MealShopVO;
+import com.prime.asartaline.data.vo.ShopVO;
 import com.prime.asartaline.data.vo.WarDeeVO;
 import com.prime.asartaline.delegates.WarDeeItemDelegate;
 import com.prime.asartaline.mvp.views.MainView;
@@ -15,11 +15,12 @@ import java.util.List;
  * Created by yepyaesonetun on 7/5/18.
  **/
 
-public class MainPresenter extends BasePresenter<MainView> implements WarDeeItemDelegate {
+public class MainPresenter extends BasePresenter<MainView> implements WarDeeItemDelegate{
 
     private MutableLiveData<List<WarDeeVO>> mWarDeeVOListLD;
-    private MutableLiveData<List<MealShopVO>> mMealShopVOListLD;
     private static final int INITIAL_PAGE_INDEX = 1;
+
+    private MutableLiveData<List<ShopVO>> mMealShopVOListLD;
 
     @Override
     public void onTapWarDeeItem(String id) {
@@ -34,17 +35,13 @@ public class MainPresenter extends BasePresenter<MainView> implements WarDeeItem
         loadData(INITIAL_PAGE_INDEX);
     }
 
-    public void loadData(int pageNo) {
-        WarDeeModel.getInstance().startLoadingASTLData(pageNo, mWarDeeVOListLD, mMealShopVOListLD, mErrorLD);
+    public void loadData(int pageNo){
+        WarDeeModel.getInstance().startLoadingASTLData(pageNo,mWarDeeVOListLD, mMealShopVOListLD, mErrorLD);
     }
 
-    public LiveData<List<WarDeeVO>> getWarDeeVOListLD() {
-        return mWarDeeVOListLD;
-    }
+    public LiveData<List<WarDeeVO>> getWarDeeVOListLD(){return mWarDeeVOListLD;}
 
-    public LiveData<List<MealShopVO>> getMealShopListLD() {
-        return mMealShopVOListLD;
-    }
+    public LiveData<List<ShopVO>> getMealShopListLD(){return mMealShopVOListLD;}
 
 
 }

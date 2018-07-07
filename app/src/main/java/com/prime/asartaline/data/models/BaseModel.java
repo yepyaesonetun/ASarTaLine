@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.prime.asartaline.network.ASarTaLineAPI;
+import com.prime.asartaline.persistence.WarDeeDB;
 import com.prime.asartaline.utils.AppConstants;
 
 import java.util.concurrent.TimeUnit;
@@ -20,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseModel {
 
     protected ASarTaLineAPI mTheAPI;
-    // define DB
+    protected WarDeeDB mTheDB;
 
     protected BaseModel(Context context){
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -37,6 +38,6 @@ public class BaseModel {
                 .build();
 
         mTheAPI  = retrofit.create(ASarTaLineAPI.class);
-        // initialize and assign DB
+        mTheDB = WarDeeDB.getDatabase(context);
     }
 }

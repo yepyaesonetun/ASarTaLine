@@ -1,5 +1,11 @@
 package com.prime.asartaline.data.vo;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -8,104 +14,31 @@ import java.util.List;
  * Created by yepyaesonetun on 7/6/18.
  **/
 
+@Entity(tableName = "meal_shop"
+        , indices = {@Index(value = "warDeeId")},
+        foreignKeys = {@ForeignKey(entity = WarDeeVO.class, parentColumns = "warDeeId", childColumns = "warDeeId")})
 public class MealShopVO {
 
-    @SerializedName("shopId")
-    private String shopId;
+    @PrimaryKey
+    @NonNull
+    @SerializedName("mealShopId")
+    private String mealShopId;
 
-    @SerializedName("name")
-    private String name;
+    private String warDeeId;
 
-    @SerializedName("address")
-    private String address;
-
-    @SerializedName("lat")
-    private double lat;
-
-    @SerializedName("lng")
-    private double lng;
-
-    @SerializedName("township")
-    private String township;
-
-    @SerializedName("popularity")
-    private double popularity;
-
-    @SerializedName("shopImages")
-    private List<String> shopImages;
-
-    @SerializedName("reviews")
-    private List<ReviewVO> reviewVOList;
-
-    public String getShopId() {
-        return shopId;
+    public String getWarDeeId() {
+        return warDeeId;
     }
 
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
+    public void setWarDeeId(String warDeeId) {
+        this.warDeeId = warDeeId;
     }
 
-    public String getName() {
-        return name;
+    public String getMealShopId() {
+        return mealShopId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
-    public String getTownship() {
-        return township;
-    }
-
-    public void setTownship(String township) {
-        this.township = township;
-    }
-
-    public double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
-    }
-
-    public List<String> getShopImages() {
-        return shopImages;
-    }
-
-    public void setShopImages(List<String> shopImages) {
-        this.shopImages = shopImages;
-    }
-
-    public List<ReviewVO> getReviewVOList() {
-        return reviewVOList;
-    }
-
-    public void setReviewVOList(List<ReviewVO> reviewVOList) {
-        this.reviewVOList = reviewVOList;
+    public void setMealShopId(String mealShopId) {
+        this.mealShopId = mealShopId;
     }
 }

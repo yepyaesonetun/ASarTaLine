@@ -1,45 +1,61 @@
 package com.prime.asartaline.data.vo;
 
-import com.google.gson.annotations.SerializedName;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
+import com.prime.asartaline.persistence.typeconverters.WarDeeImagesTypeConvertor;
+
 import java.util.List;
 
 /**
  * Created by yepyaesonetun on 7/2/18.
  **/
+@Entity(tableName = "war_dee")
+public class WarDeeVO {
 
-public class WarDeeVO  {
+    @PrimaryKey
+    @NonNull
     @SerializedName("warDeeId")
-    public String warDeeId;
+    private String warDeeId;
 
     @SerializedName("name")
-    public String name;
+    private String warTeeName;
 
+    @TypeConverters(WarDeeImagesTypeConvertor.class)
     @SerializedName("images")
-    public List<String> images;
+    @ColumnInfo(name = "images")
+    private List<String> images;
 
+    @Ignore
     @SerializedName("generalTaste")
-    public List<GeneralTasteVO> generalTaste;
+    private List<GeneralTasteVO> generalTaste;
 
+    @Ignore
     @SerializedName("suitedFor")
-    public List<SuitedForVO> suitedFor;
+    private List<SuitedForVO> suitedFor;
 
     @SerializedName("priceRangeMin")
-    public Integer priceRangeMin;
+    private String minPrice;
 
     @SerializedName("priceRangeMax")
-    public Integer priceRangeMax;
+    private String maxPrice;
 
+    @Ignore
     @SerializedName("matchWarDeeList")
-    public List<MatchWarDeeVO> matchWarDeeList;
+    private List<MatchWarDeeVO> matchWarTees;
 
+    @Ignore
     @SerializedName("shopByDistance")
-    public List<ShopByDistanceVO> shopByDistance;
+    private List<ShopByDistanceVO> shopByDistance;
 
+    @Ignore
     @SerializedName("shopByPopularity")
-    public List<ShopByPopularityVO> shopByPopularity;
-
+    private List<ShopByPopularityVO> shopByPopularity;
 
     public String getWarDeeId() {
         return warDeeId;
@@ -49,18 +65,15 @@ public class WarDeeVO  {
         this.warDeeId = warDeeId;
     }
 
-    public String getName() {
-        return name;
+    public String getWarTeeName() {
+        return warTeeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWarTeeName(String warTeeName) {
+        this.warTeeName = warTeeName;
     }
 
     public List<String> getImages() {
-        if (images == null){
-            images = new ArrayList<>();
-        }
         return images;
     }
 
@@ -84,28 +97,28 @@ public class WarDeeVO  {
         this.suitedFor = suitedFor;
     }
 
-    public Integer getPriceRangeMin() {
-        return priceRangeMin;
+    public String getMinPrice() {
+        return minPrice;
     }
 
-    public void setPriceRangeMin(Integer priceRangeMin) {
-        this.priceRangeMin = priceRangeMin;
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
     }
 
-    public Integer getPriceRangeMax() {
-        return priceRangeMax;
+    public String getMaxPrice() {
+        return maxPrice;
     }
 
-    public void setPriceRangeMax(Integer priceRangeMax) {
-        this.priceRangeMax = priceRangeMax;
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
-    public List<MatchWarDeeVO> getMatchWarDeeList() {
-        return matchWarDeeList;
+    public List<MatchWarDeeVO> getMatchWarTees() {
+        return matchWarTees;
     }
 
-    public void setMatchWarDeeList(List<MatchWarDeeVO> matchWarDeeList) {
-        this.matchWarDeeList = matchWarDeeList;
+    public void setMatchWarTees(List<MatchWarDeeVO> matchWarTees) {
+        this.matchWarTees = matchWarTees;
     }
 
     public List<ShopByDistanceVO> getShopByDistance() {

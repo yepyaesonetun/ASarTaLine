@@ -1,10 +1,8 @@
 package com.prime.asartaline.activities;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -14,7 +12,7 @@ import com.prime.asartaline.R;
 import com.prime.asartaline.adapters.WarDeeRVAdapter;
 import com.prime.asartaline.components.EmptyViewPod;
 import com.prime.asartaline.components.SmartRecyclerView;
-import com.prime.asartaline.data.vo.MealShopVO;
+import com.prime.asartaline.data.vo.ShopVO;
 import com.prime.asartaline.data.vo.WarDeeVO;
 import com.prime.asartaline.mvp.presenters.MainPresenter;
 import com.prime.asartaline.mvp.views.MainView;
@@ -60,17 +58,20 @@ public class MainActivity extends BaseActivity implements MainView{
 
         cvMainSearch.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show());
 
+
+
         mPresenter.getWarDeeVOListLD().observe(this, warDeeVOS -> displayWarDeeListData(warDeeVOS));
+
         mPresenter.getMealShopListLD().observe(this, mealShopVOS -> displayMealShopListData(mealShopVOS));
 
-        mPresenter.getErrorLD().observe(this, errorMsg -> {
+        mPresenter.getErrorLD().observe(this, s -> {
 //            cvMainSearch.setVisibility(View.GONE);
 //            emptyViewPod.setVisibility(View.VISIBLE);
-            Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
         });
     }
 
-    private void displayMealShopListData(List<MealShopVO> mealShopVOS) {
+    private void displayMealShopListData(List<ShopVO> mealShopVOS) {
         Toast.makeText(this, mealShopVOS.get(0).getName(), Toast.LENGTH_SHORT).show();
     }
 

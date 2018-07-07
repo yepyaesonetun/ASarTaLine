@@ -1,7 +1,7 @@
 package com.prime.asartaline.network.responses;
 
 import com.google.gson.annotations.SerializedName;
-import com.prime.asartaline.data.vo.MealShopVO;
+import com.prime.asartaline.data.vo.ShopVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class GetMealShopResponse {
     private String apiVersion;
 
     @SerializedName("astlMealShop")
-    private List<MealShopVO> mealShopVOList;
+    private List<ShopVO> mealShopVOList;
 
     public int getCode() {
         return code;
@@ -35,7 +35,7 @@ public class GetMealShopResponse {
         return apiVersion;
     }
 
-    public List<MealShopVO> getMealShopVOList() {
+    public List<ShopVO> getMealShopVOList() {
         if (mealShopVOList == null){
             mealShopVOList = new ArrayList<>();
         }
