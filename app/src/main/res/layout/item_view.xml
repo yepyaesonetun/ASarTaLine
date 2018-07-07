@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardMaxElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_warDee"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_food" />
+
+        <org.mmtextview.components.MMTextView
+            android:id="@+id/tv_warDee_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_warDee_price"
+            android:layout_toEndOf="@+id/iv_warDee"
+            android:paddingStart="@dimen/padding_large"
+            android:paddingTop="@dimen/padding_medium"
+            android:text="ထမင်း​ပေါင်း"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <org.mmtextview.components.MMTextView
+            android:id="@+id/tv_warDee_taste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_more_detail"
+            android:layout_toEndOf="@+id/iv_warDee"
+            android:paddingStart="@dimen/padding_large"
+            android:paddingTop="@dimen/padding_small"
+            android:text="ချိုဆိမ့်သော"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_warDee_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_warDee_taste"
+            android:layout_toEndOf="@+id/iv_warDee"
+            android:paddingStart="@dimen/padding_large"
+            android:text="200-300 MMK" />
+
+        <TextView
+            android:id="@+id/tv_more_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_warDee"
+            android:layout_alignParentEnd="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="@dimen/padding_small"
+            android:text="View Detail"
+            android:textAllCaps="true" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

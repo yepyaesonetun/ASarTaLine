@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ASarTaLine</string>
+    <string name="content_descpt_collapse_image">collapse image</string>
+    <string name="msg_generic_no_data">Sorry, No data to display.</string>
+    <string name="lbl_refresh">Refresh</string>
+</resources>
