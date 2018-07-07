@@ -1,5 +1,6 @@
 package com.prime.asartaline.data.vo;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
@@ -11,30 +12,19 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by yepyaesonetun on 7/4/18.
  **/
-@Entity(tableName = "suited_for", indices = {@Index(value = "warDeeId")},
-        foreignKeys = {@ForeignKey(entity = WarDeeVO.class, parentColumns = "warDeeId", childColumns = "warDeeId")})
+@Entity(tableName = "suited_for")
 public class SuitedForVO {
 
     @PrimaryKey
     @NonNull
-    @SerializedName("suitedForId")
+    @ColumnInfo(name = "suited_for_id")
     private String suitedForId;
-
-    @SerializedName("suitedFor")
+    @ColumnInfo(name = "suited_for")
     private String suitedFor;
-
-    @SerializedName("suitedForDesc")
+    @ColumnInfo(name = "suited_desc")
     private String suitedForDesc;
-
-    private String warDeeId;
-
-    public String getWarDeeId() {
-        return warDeeId;
-    }
-
-    public void setWarDeeId(String warDeeId) {
-        this.warDeeId = warDeeId;
-    }
+    @ColumnInfo(name = "foodId")
+    private transient String foodId;
 
     public String getSuitedForId() {
         return suitedForId;
@@ -58,6 +48,14 @@ public class SuitedForVO {
 
     public void setSuitedForDesc(String suitedForDesc) {
         this.suitedForDesc = suitedForDesc;
+    }
+
+    public String getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 
 }

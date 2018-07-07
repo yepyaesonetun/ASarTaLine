@@ -1,5 +1,6 @@
 package com.prime.asartaline.data.vo;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
@@ -12,26 +13,23 @@ import com.google.gson.annotations.SerializedName;
  * Created by yepyaesonetun on 7/6/18.
  **/
 
-@Entity(tableName = "reviews", foreignKeys = {@ForeignKey(entity = ShopVO.class, parentColumns = "shopId", childColumns = "shopId")},
-        indices = {@Index(value = "shopId")})
+@Entity(tableName = "reviews")
 public class ReviewVO {
-    @NonNull
     @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "review_id")
     private String reviewId;
     private String review;
+    @ColumnInfo(name = "user_id")
     private String userId;
+    @ColumnInfo(name = "user_name")
     private String userName;
+    @ColumnInfo(name = "user_image")
     private String userImage;
+    @ColumnInfo(name = "time_stamp")
     private String timestamp;
-    private String shopId;
-
-    public String getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
-    }
+    @ColumnInfo(name = "restaurant_id")
+    private transient String restaurantId;
 
     public String getReviewId() {
         return reviewId;
@@ -79,5 +77,13 @@ public class ReviewVO {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 }

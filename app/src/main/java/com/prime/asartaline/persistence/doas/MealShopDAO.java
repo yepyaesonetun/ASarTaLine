@@ -17,11 +17,15 @@ import java.util.List;
 @Dao
 public interface MealShopDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertMealShops(MealShopVO... mealShopVOS);
+    long[] insertMealShop(MealShopVO... mealShopVOs);
 
-    @Query("SELECT * FROM meal_shop WHERE warDeeId = :warDeeId")
-    MealShopVO getMealShopById(String warDeeId);
+    @Query("SELECT * FROM meal_shop")
+    List<MealShopVO> getAllMealShops();
 
-    @Query("SELECT * FROM meal_shop WHERE warDeeId = :warDeeId")
-    LiveData<List<MealShopVO>> getMealShopLDById(String warDeeId);
+    @Query("SELECT * FROM meal_shop WHERE meal_shop_id= :mealShopId")
+    MealShopVO getMatchMealShopById(String mealShopId);
+
+    @Query("SELECT * FROM meal_shop WHERE meal_shop_id= :mealShopId")
+    LiveData<MealShopVO> getMatchMealShopByIdLD(String mealShopId);
+
 }

@@ -17,14 +17,14 @@ import java.util.List;
 @Dao
 public interface GeneralTasteDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertGeneralTaste(GeneralTasteVO... generalTasteVOS);
+    long[] insertGeneralTaste(GeneralTasteVO... generalTasteVOs);
 
     @Query("SELECT * FROM general_taste")
-    List<GeneralTasteVO> getAllTastes();
+    List<GeneralTasteVO> getAllGeneralTastes();
 
-    @Query("SELECT * FROM general_taste WHERE warDeeId = :warDeeId")
-    GeneralTasteVO getTasteById(String warDeeId);
+    @Query("SELECT * FROM general_taste WHERE taste_id= :tasteId")
+    GeneralTasteVO getGeneralTastesByFoodId(String tasteId);
 
-    @Query("SELECT * FROM general_taste WHERE warDeeId = :warDeeId")
-    LiveData<List<GeneralTasteVO>> getTasteLDById(String warDeeId);
+    @Query("SELECT * FROM general_taste WHERE taste_id= :tasteId")
+    LiveData<GeneralTasteVO> getGeneralTastesByIdLD(String tasteId);
 }

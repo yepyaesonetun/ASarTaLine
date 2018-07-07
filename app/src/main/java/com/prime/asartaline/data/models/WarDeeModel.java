@@ -1,5 +1,6 @@
 package com.prime.asartaline.data.models;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.util.Log;
@@ -63,8 +64,6 @@ public class WarDeeModel extends BaseModel {
 
                         // could not invoke setValue on Background Thread, so store first to list
                         mMealShopVOList.addAll(getMealShopResponse.getMealShopVOList());
-
-                        persistMealShopToDB(getMealShopResponse.getMealShopVOList());
                     } else {
                         mMealShopErrMsg = "Empty MealShops";
                     }
@@ -81,17 +80,17 @@ public class WarDeeModel extends BaseModel {
 
                                 // could not invoke setValue on Background Thread, so store first to list
                                 mWarDeeVOList.addAll(getWarteeResponse.getWarDeeVOList());
-
-                                persistWarDeeDataToDB(getWarteeResponse.getWarDeeVOList());
                             } else {
                                 mWarDeeErrMsg = "Empty WarDees";
                             }
 
                             if (mWarDeeVOList.size() > 0) {
                                 warDeeLD.setValue(mWarDeeVOList);
+                                persistWarDeeDataToDB(mWarDeeVOList);
                             }
                             if (mMealShopVOList.size() > 0) {
                                 mealShopLD.setValue(mMealShopVOList);
+                                persistMealShopToDB(mMealShopVOList);
                             }
                             if (mMealShopErrMsg != null) {
                                 errorLD.setValue(mMealShopErrMsg);
@@ -105,56 +104,99 @@ public class WarDeeModel extends BaseModel {
     }
 
     private void persistWarDeeDataToDB(List<WarDeeVO> warDeeVOS) {
-        for (WarDeeVO warDeeVO : warDeeVOS) {
-            if (warDeeVO.getGeneralTaste() != null) {
-                for (GeneralTasteVO generalTasteVO : warDeeVO.getGeneralTaste()) {
-                    mTheDB.generalTasteDAO().insertGeneralTaste(generalTasteVO);
-                }
+        List<GeneralTasteVO> generalTasteList = new ArrayList<>();
+        List<SuitedForVO> suitedForList = new ArrayList<>();
+        List<MatchWarDeeVO> matchWarDeeList = new ArrayList<>();
+        List<MealShopVO> mealShopList = new ArrayList<>();
+        List<ShopByDistanceVO> shopByDistanceList = new ArrayList<>();
+        List<ShopByPopularityVO> shopByPopularityList = new ArrayList<>();
+
+        for (WarDeeVO food : warDeeVOS) {
+            for (GeneralTasteVO generalTaste : food.getGeneralTaste()) {
+                generalTaste.setFoodId(food.getWarDeeId());
+                generalTasteList.add(generalTaste);
             }
-            if (warDeeVO.getMatchWarTees() != null) {
-                for (MatchWarDeeVO matchWarTeeVO : warDeeVO.getMatchWarTees()) {
-                    mTheDB.matchWarDeeDAO().insertMatchWarDee(matchWarTeeVO);
-                }
+            for (SuitedForVO suitedFor : food.getSuitedFor()) {
+                suitedFor.setFoodId(food.getWarDeeId());
+                suitedForList.add(suitedFor);
             }
-            if (warDeeVO.getShopByDistance() != null) {
-                for (ShopByDistanceVO shopByDistanceVO : warDeeVO.getShopByDistance()) {
-                    if (shopByDistanceVO.getMealShop() != null) {
-                        for (MealShopVO mealShopVO : shopByDistanceVO.getMealShop()) {
-                            mTheDB.mealShopDAO().insertMealShops(mealShopVO);
-                        }
-                    }
-                    mTheDB.shopByDistanceDAO().insertShops(shopByDistanceVO);
-                }
+            for (MatchWarDeeVO matchWarDee : food.getMatchWarDeeList()) {
+                matchWarDee.setFoodId(food.getWarDeeId());
+                matchWarDeeList.add(matchWarDee);
             }
-            if (warDeeVO.getShopByPopularity() != null) {
-                for (ShopByPopularityVO shopByPopularityVO : warDeeVO.getShopByPopularity()) {
-                    if (shopByPopularityVO.getMealShop() != null) {
-                        for (MealShopVO mealShopVO : shopByPopularityVO.getMealShop()) {
-                            mTheDB.mealShopDAO().insertMealShops(mealShopVO);
-                        }
-                    }
-                    mTheDB.shopByPopularityDAO().insertShops(shopByPopularityVO);
-                }
+            for (ShopByDistanceVO shopByDistance : food.getShopByDistance()) {
+                mealShopList.add(shopByDistance.getMealShop());
+
+                shopByDistance.setFoodId(food.getWarDeeId());
+                shopByDistanceList.add(shopByDistance);
             }
-            if (warDeeVO.getSuitedFor() != null) {
-                for (SuitedForVO suitedForVO : warDeeVO.getSuitedFor()) {
-                    mTheDB.suitedForDAO().insertSuitedFor(suitedForVO);
-                }
+            for (ShopByPopularityVO shopByPopularity : food.getShopByPopularity()) {
+                mealShopList.add(shopByPopularity.getMealShop());
+
+                shopByPopularity.setFoodId(food.getWarDeeId());
+                shopByPopularityList.add(shopByPopularity);
             }
-            mTheDB.warDeeDAO().insertWarDee(warDeeVO);
         }
-        Log.d("DB WarDee", "SAVED ");
+
+        long[] insertedGeneratedTaste = mTheDB.generalTasteDao().insertGeneralTaste(generalTasteList.toArray(new GeneralTasteVO[0]));
+        Log.d("WarDee DB", "insertedGeneratedTaste : " + insertedGeneratedTaste);
+
+        long[] insertedSuitedFor = mTheDB.suitedForDao().insertSuitedFor(suitedForList.toArray(new SuitedForVO[0]));
+        Log.d("WarDee DB", "insertedSuitedFor : " + insertedSuitedFor);
+
+        long[] insertedMatchWarDee = mTheDB.matchWarDeeListDao().insertMatchWarDee(matchWarDeeList.toArray(new MatchWarDeeVO[0]));
+        Log.d("WarDee DB", "insertedMatchWarDee : " + insertedMatchWarDee);
+
+        long[] insertedShopByDistance = mTheDB.shopByDistanceDao().insertShopByDistance(shopByDistanceList.toArray(new ShopByDistanceVO[0]));
+        Log.d("WarDee DB", "insertedShopByDistance : " + insertedShopByDistance);
+
+        long[] insertedShopByPopularity = mTheDB.shopByPopularityDao().insertShopByPopularity(shopByPopularityList.toArray(new ShopByPopularityVO[0]));
+        Log.d("WarDee DB", "insertedShopByPopularity : " + insertedShopByPopularity);
+
+        long[] insertedMealShop = mTheDB.mealShopDao().insertMealShop(mealShopList.toArray(new MealShopVO[0]));
+        Log.d("WarDee DB", "insertedMealShop : " + insertedMealShop);
+
+        long[] insertedFoods = mTheDB.foodDao().insertFood(warDeeVOS.toArray(new WarDeeVO[0]));
+        Log.d("WarDee DB", "insertedFoods : " + insertedFoods);
     }
 
     private void persistMealShopToDB(List<ShopVO> mealShopVOList) {
-        for (ShopVO shopVO : mealShopVOList) {
-            if (shopVO.getReviewVOList() != null) {
-                for (ReviewVO reviewsVO : shopVO.getReviewVOList()) {
-//                    mTheDB.ReviewsDAO().insertAllReviews(reviewsVO);
-                }
+        List<ReviewVO> reviewsList = new ArrayList<>();
+
+        for (ShopVO restaurant : mealShopVOList) {
+            for (ReviewVO reviews : restaurant.getReviewVOList()) {
+                reviews.setRestaurantId(restaurant.getShopId());
             }
-//            mTheDB.ShopDAO().insertShops(shopVO);
         }
-//        Log.d(ASarTaLineApp.LOG_TAG, "SAVED SHOP LIST ");
+
+        long[] insertedReviews = mTheDB.reviewsDao().insertReview(reviewsList.toArray(new ReviewVO[0]));
+        Log.d("Shop DB", "insertedReviews : " + insertedReviews);
+
+        long[] insertedRestaurants = mTheDB.restaurantDao().insertRestaurant(mealShopVOList.toArray(new ShopVO[0]));
+        Log.d("Shop DB", "insertedRestaurants : " + insertedRestaurants);
     }
+
+    public LiveData<WarDeeVO> getWarDeeByIdLD(final String foodId) {
+        final MutableLiveData<WarDeeVO> warDeeLD = new MutableLiveData<>();
+        mTheDB.foodDao().getWarDeeByIdLD(foodId).observeForever(warDeeVO -> {
+            if (warDeeVO != null) {
+                for (ShopByDistanceVO shopByDistance : warDeeVO.getShopByDistance()) {
+                    shopByDistance.setMealShop(mTheDB.mealShopDao().getMatchMealShopById(shopByDistance.getMealShopId()));
+                }
+                for (ShopByPopularityVO shopByPopularity : warDeeVO.getShopByPopularity()) {
+                    shopByPopularity.setMealShop(mTheDB.mealShopDao().getMatchMealShopById(shopByPopularity.getMealShopId()));
+                }
+
+                warDeeLD.setValue(warDeeVO);
+            }
+        });
+        return warDeeLD;
+    }
+
+    public LiveData<ShopVO> getRestaurantByIdLD(final String restaurantId) {
+        final MutableLiveData<ShopVO> shopLD = new MutableLiveData<>();
+        mTheDB.restaurantDao().getRestaurantsByIdLD(restaurantId).observeForever(restaurant -> shopLD.setValue(restaurant));
+        return shopLD;
+    }
+
 }

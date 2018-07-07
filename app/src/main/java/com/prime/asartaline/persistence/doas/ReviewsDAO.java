@@ -18,5 +18,15 @@ import java.util.List;
 @Dao
 public interface ReviewsDAO {
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long[] insertReview(ReviewVO... reviewsVOs);
 
+    @Query("SELECT * FROM reviews")
+    List<ReviewVO> getAllReviews();
+
+    @Query("SELECT * FROM reviews WHERE review_id= :reviewId")
+    ReviewVO getReviewById(String reviewId);
+
+    @Query("SELECT * FROM reviews WHERE review_id= :reviewId")
+    LiveData<ReviewVO> getReviewByIdLD(String reviewId);
 }

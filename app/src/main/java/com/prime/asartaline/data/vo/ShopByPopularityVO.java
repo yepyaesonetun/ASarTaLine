@@ -1,5 +1,6 @@
 package com.prime.asartaline.data.vo;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
@@ -15,40 +16,51 @@ import java.util.List;
  * Created by yepyaesonetun on 7/4/18.
  **/
 
-@Entity(tableName = "shop_by_popularity", indices = {@Index(value = "warDeeId")},
-        foreignKeys = {@ForeignKey(entity = WarDeeVO.class, parentColumns = "warDeeId", childColumns = "warDeeId")})
+@Entity(tableName = "shop_by_popularity")
 public class ShopByPopularityVO {
-    @NonNull
     @PrimaryKey
-    @SerializedName("shopByPopularityId")
-    private String shopId;
+    @NonNull
+    @ColumnInfo(name = "shop_by_popularity_id")
+    private String shopByPopularityId;
 
-    private String warDeeId;
     @Ignore
-    @SerializedName("mealShop")
-    private List<MealShopVO> mealShop;
+    private MealShopVO mealShop;
 
-    public String getWarDeeId() {
-        return warDeeId;
+    @ColumnInfo(name = "meal_shop_id")
+    private String mealShopId;
+
+    @ColumnInfo(name = "foodId")
+    private transient String foodId;
+
+    public String getShopByPopularityId() {
+        return shopByPopularityId;
     }
 
-    public void setWarDeeId(String warDeeId) {
-        this.warDeeId = warDeeId;
+    public void setShopByPopularityId(String shopByPopularityId) {
+        this.shopByPopularityId = shopByPopularityId;
     }
 
-    public String getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
-    }
-
-    public List<MealShopVO> getMealShop() {
+    public MealShopVO getMealShop() {
         return mealShop;
     }
 
-    public void setMealShop(List<MealShopVO> mealShop) {
+    public void setMealShop(MealShopVO mealShop) {
         this.mealShop = mealShop;
+    }
+
+    public String getMealShopId() {
+        return mealShopId;
+    }
+
+    public void setMealShopId(String mealShopId) {
+        this.mealShopId = mealShopId;
+    }
+
+    public String getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 }

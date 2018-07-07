@@ -17,14 +17,14 @@ import java.util.List;
 @Dao
 public interface WarDeeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertWarDee(WarDeeVO... warDeeVOS);
+    long[] insertFood(WarDeeVO... foodVOs);
 
     @Query("SELECT * FROM war_dee")
-    List<WarDeeVO> getAllWarDee();
+    List<WarDeeVO> getAllFoods();
 
-    @Query("SELECT * FROM war_dee WHERE warDeeId = :warDeeId")
-    WarDeeVO getWarDeeById(String warDeeId);
+    @Query("SELECT * FROM war_dee WHERE war_dee_id = :warDeeId")
+    WarDeeVO getWarrDeeByID(String warDeeId);
 
-    @Query("SELECT * FROM war_dee WHERE warDeeId = :warDeeId")
-    LiveData<List<WarDeeVO>> getWarDeeLDById(String warDeeId);
+    @Query("SELECT * FROM war_dee WHERE war_dee_id = :warDeeId")
+    LiveData<WarDeeVO> getWarDeeByIdLD(String warDeeId);
 }

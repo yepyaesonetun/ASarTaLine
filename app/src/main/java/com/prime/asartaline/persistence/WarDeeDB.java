@@ -3,7 +3,6 @@ package com.prime.asartaline.persistence;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.prime.asartaline.data.vo.GeneralTasteVO;
@@ -24,45 +23,36 @@ import com.prime.asartaline.persistence.doas.ShopByPopularityDAO;
 import com.prime.asartaline.persistence.doas.ShopDAO;
 import com.prime.asartaline.persistence.doas.SuitedForDAO;
 import com.prime.asartaline.persistence.doas.WarDeeDAO;
-import com.prime.asartaline.persistence.typeconverters.WarDeeImagesTypeConvertor;
 
 /**
  * Created by yepyaesonetun on 7/6/18.
  **/
-@Database(entities = {GeneralTasteVO.class, MatchWarDeeVO.class, MealShopVO.class,
-        ShopByDistanceVO.class, ShopByPopularityVO.class, SuitedForVO.class, WarDeeVO.class, ShopVO.class, ReviewVO.class},
-        version = 2, exportSchema = false)
-@TypeConverters({WarDeeImagesTypeConvertor.class})
+@Database(entities = {
+        WarDeeVO.class, GeneralTasteVO.class, MatchWarDeeVO.class,
+        MealShopVO.class, ShopVO.class, ReviewVO.class,
+        ShopByDistanceVO.class, ShopByPopularityVO.class, SuitedForVO.class
+}, version = 1, exportSchema = false)
 public abstract class WarDeeDB extends RoomDatabase {
+
     private static final String DB_NAME = "A_SAR_TA_LINE.DB";
-    private static WarDeeDB DB_INSTANCE;
+    private static WarDeeDB INSTANCE;
 
-    //DEFINE DAOs
-    public abstract GeneralTasteDAO generalTasteDAO();
-
-    public abstract MatchWarDeeDAO matchWarDeeDAO();
-
-    public abstract MealShopDAO mealShopDAO();
-
-    public abstract ShopByDistanceDAO shopByDistanceDAO();
-
-    public abstract ShopByPopularityDAO shopByPopularityDAO();
-
-    public abstract SuitedForDAO suitedForDAO();
-
-    public abstract WarDeeDAO warDeeDAO();
-
-    public abstract ShopDAO ShopDAO();
-
-    public abstract ReviewsDAO ReviewsDAO();
+    public abstract WarDeeDAO foodDao();
+    public abstract GeneralTasteDAO generalTasteDao();
+    public abstract MatchWarDeeDAO matchWarDeeListDao();
+    public abstract MealShopDAO mealShopDao();
+    public abstract ShopDAO restaurantDao();
+    public abstract ReviewsDAO reviewsDao();
+    public abstract ShopByDistanceDAO shopByDistanceDao();
+    public abstract ShopByPopularityDAO shopByPopularityDao();
+    public abstract SuitedForDAO suitedForDao();
 
     public static WarDeeDB getDatabase(Context context) {
-        if (DB_INSTANCE == null) {
-//            DB_INSTANCE = Room.inMemoryDatabaseBuilder(context, WarDeeDB.class).build();
-            DB_INSTANCE = Room.databaseBuilder(context, WarDeeDB.class, DB_NAME)
+        if(INSTANCE == null) {
+            INSTANCE = Room.databaseBuilder(context, WarDeeDB.class, DB_NAME)
                     .allowMainThreadQueries() //Remove this after testing. Access to DB should always be from background thread.
                     .build();
         }
-        return DB_INSTANCE;
+        return INSTANCE;
     }
 }

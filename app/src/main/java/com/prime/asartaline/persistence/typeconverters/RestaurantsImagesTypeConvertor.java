@@ -9,8 +9,7 @@ import java.util.List;
  * Created by yepyaesonetun on 7/7/18.
  **/
 
-public class WarDeeImagesTypeConvertor {
-
+public class RestaurantsImagesTypeConvertor {
     @TypeConverter
     public static List<String> toStringList(String imagesCommaSeparated) {
         String[] imagesArray = imagesCommaSeparated.split(",");
@@ -28,5 +27,4 @@ public class WarDeeImagesTypeConvertor {
         }
         return stringBuilder.toString();
     }
-
 }

@@ -17,11 +17,14 @@ import java.util.List;
 @Dao
 public interface MatchWarDeeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertMatchWarDee(MatchWarDeeVO... matchWarTeeLists);
+    long[] insertMatchWarDee(MatchWarDeeVO... matchWarDeeListVOs);
 
-    @Query("SELECT * FROM match_war_tee WHERE warDeeId = :warDeeId")
-    MatchWarDeeVO getMatchWarDeeById(String warDeeId);
+    @Query("SELECT * FROM match_war_tee")
+    List<MatchWarDeeVO> getAllMatchWarDeeList();
 
-    @Query("SELECT * FROM match_war_tee WHERE warDeeId = :warDeeId")
-    LiveData<List<MatchWarDeeVO>> getMatchWarDeeLDById(String warDeeId);
+    @Query("SELECT * FROM match_war_tee WHERE war_dee_id= :warDeeId")
+    MatchWarDeeVO getMatchWarDeeListById(String warDeeId);
+
+    @Query("SELECT * FROM match_war_tee WHERE war_dee_id= :warDeeId")
+    LiveData<MatchWarDeeVO> getMatchWarDeeListByIdLD(String warDeeId);
 }

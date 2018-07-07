@@ -1,5 +1,6 @@
 package com.prime.asartaline.data.vo;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -14,10 +15,10 @@ import com.google.gson.annotations.SerializedName;
 public class MatchWarDeeVO {
     @PrimaryKey
     @NonNull
-    @SerializedName("warDeeId")
-    private String matchWarDeeId;
-
+    @ColumnInfo(name = "war_dee_id")
     private String warDeeId;
+    @ColumnInfo(name = "food_id")
+    private transient String foodId;
 
     public String getWarDeeId() {
         return warDeeId;
@@ -27,13 +28,12 @@ public class MatchWarDeeVO {
         this.warDeeId = warDeeId;
     }
 
-    @NonNull
-    public String getMatchWarDeeId() {
-        return matchWarDeeId;
+    public String getFoodId() {
+        return foodId;
     }
 
-    public void setMatchWarDeeId(@NonNull String matchWarDeeId) {
-        this.matchWarDeeId = matchWarDeeId;
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 
 }

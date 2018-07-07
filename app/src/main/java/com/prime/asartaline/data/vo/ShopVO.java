@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
-import com.prime.asartaline.persistence.typeconverters.WarDeeImagesTypeConvertor;
+import com.prime.asartaline.persistence.typeconverters.RestaurantsImagesTypeConvertor;
 
 import java.util.List;
 
@@ -17,11 +17,12 @@ import java.util.List;
  **/
 
 @Entity(tableName = "shops")
+@TypeConverters(RestaurantsImagesTypeConvertor.class)
 public class ShopVO {
 
     @PrimaryKey
     @NonNull
-    @SerializedName("shopId")
+    @ColumnInfo(name = "shop_id")
     private String shopId;
 
     @SerializedName("name")
@@ -42,7 +43,6 @@ public class ShopVO {
     @SerializedName("popularity")
     private double popularity;
 
-    @TypeConverters(WarDeeImagesTypeConvertor.class)
     @ColumnInfo(name = "shopImages")
     @SerializedName("shopImages")
     private List<String> shopImages;

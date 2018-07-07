@@ -17,11 +17,14 @@ import java.util.List;
 @Dao
 public interface ShopByPopularityDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertShops(ShopByPopularityVO... shopByPopularityVOS);
+    long[] insertShopByPopularity(ShopByPopularityVO... shopByPopularityVOs);
 
-    @Query("SELECT * FROM shop_by_popularity WHERE warDeeId = :warDeeId")
-    ShopByPopularityVO getShopsById(String warDeeId);
+    @Query("SELECT * FROM shop_by_popularity")
+    List<ShopByPopularityVO> getAllShopsByPopularity();
 
-    @Query("SELECT * FROM shop_by_popularity WHERE warDeeId = :warDeeId")
-    LiveData<List<ShopByPopularityVO>> getShopsLDbyId(String warDeeId);
+    @Query("SELECT * FROM shop_by_popularity WHERE shop_by_popularity_id= :shopByPopularityId")
+    ShopByPopularityVO getShopByPopularityById(String shopByPopularityId);
+
+    @Query("SELECT * FROM shop_by_popularity WHERE shop_by_popularity_id= :shopByPopularityId")
+    LiveData<ShopByPopularityVO> getShopByPopularityByIdLD(String shopByPopularityId);
 }

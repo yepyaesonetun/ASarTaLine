@@ -7,54 +7,46 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
-import com.prime.asartaline.persistence.typeconverters.WarDeeImagesTypeConvertor;
+import com.prime.asartaline.persistence.typeconverters.FoodsImagesTypeConvertor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by yepyaesonetun on 7/2/18.
  **/
 @Entity(tableName = "war_dee")
+@TypeConverters(FoodsImagesTypeConvertor.class)
 public class WarDeeVO {
 
     @PrimaryKey
     @NonNull
-    @SerializedName("warDeeId")
+    @ColumnInfo(name = "war_dee_id")
     private String warDeeId;
 
-    @SerializedName("name")
-    private String warTeeName;
+    private String name;
 
-    @TypeConverters(WarDeeImagesTypeConvertor.class)
-    @SerializedName("images")
-    @ColumnInfo(name = "images")
+    @ColumnInfo(name = "price_range_min")
+    private int priceRangeMin;
+
+    @ColumnInfo(name = "price_range_max")
+    private int priceRangeMax;
+
     private List<String> images;
 
     @Ignore
-    @SerializedName("generalTaste")
     private List<GeneralTasteVO> generalTaste;
 
     @Ignore
-    @SerializedName("suitedFor")
     private List<SuitedForVO> suitedFor;
 
-    @SerializedName("priceRangeMin")
-    private String minPrice;
-
-    @SerializedName("priceRangeMax")
-    private String maxPrice;
+    @Ignore
+    private List<MatchWarDeeVO> matchWarDeeList;
 
     @Ignore
-    @SerializedName("matchWarDeeList")
-    private List<MatchWarDeeVO> matchWarTees;
-
-    @Ignore
-    @SerializedName("shopByDistance")
     private List<ShopByDistanceVO> shopByDistance;
 
     @Ignore
-    @SerializedName("shopByPopularity")
     private List<ShopByPopularityVO> shopByPopularity;
 
     public String getWarDeeId() {
@@ -65,15 +57,34 @@ public class WarDeeVO {
         this.warDeeId = warDeeId;
     }
 
-    public String getWarTeeName() {
-        return warTeeName;
+    public String getName() {
+        return name;
     }
 
-    public void setWarTeeName(String warTeeName) {
-        this.warTeeName = warTeeName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPriceRangeMin() {
+        return priceRangeMin;
+    }
+
+    public void setPriceRangeMin(int priceRangeMin) {
+        this.priceRangeMin = priceRangeMin;
+    }
+
+    public int getPriceRangeMax() {
+        return priceRangeMax;
+    }
+
+    public void setPriceRangeMax(int priceRangeMax) {
+        this.priceRangeMax = priceRangeMax;
     }
 
     public List<String> getImages() {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
         return images;
     }
 
@@ -82,6 +93,9 @@ public class WarDeeVO {
     }
 
     public List<GeneralTasteVO> getGeneralTaste() {
+        if (generalTaste == null) {
+            generalTaste = new ArrayList<>();
+        }
         return generalTaste;
     }
 
@@ -90,6 +104,9 @@ public class WarDeeVO {
     }
 
     public List<SuitedForVO> getSuitedFor() {
+        if (suitedFor == null) {
+            suitedFor = new ArrayList<>();
+        }
         return suitedFor;
     }
 
@@ -97,31 +114,21 @@ public class WarDeeVO {
         this.suitedFor = suitedFor;
     }
 
-    public String getMinPrice() {
-        return minPrice;
+    public List<MatchWarDeeVO> getMatchWarDeeList() {
+        if (matchWarDeeList == null) {
+            matchWarDeeList = new ArrayList<>();
+        }
+        return matchWarDeeList;
     }
 
-    public void setMinPrice(String minPrice) {
-        this.minPrice = minPrice;
-    }
-
-    public String getMaxPrice() {
-        return maxPrice;
-    }
-
-    public void setMaxPrice(String maxPrice) {
-        this.maxPrice = maxPrice;
-    }
-
-    public List<MatchWarDeeVO> getMatchWarTees() {
-        return matchWarTees;
-    }
-
-    public void setMatchWarTees(List<MatchWarDeeVO> matchWarTees) {
-        this.matchWarTees = matchWarTees;
+    public void setMatchWarDeeList(List<MatchWarDeeVO> matchWarDeeList) {
+        this.matchWarDeeList = matchWarDeeList;
     }
 
     public List<ShopByDistanceVO> getShopByDistance() {
+        if (shopByDistance == null) {
+            shopByDistance = new ArrayList<>();
+        }
         return shopByDistance;
     }
 
@@ -130,6 +137,9 @@ public class WarDeeVO {
     }
 
     public List<ShopByPopularityVO> getShopByPopularity() {
+        if (shopByPopularity == null) {
+            shopByPopularity = new ArrayList<>();
+        }
         return shopByPopularity;
     }
 

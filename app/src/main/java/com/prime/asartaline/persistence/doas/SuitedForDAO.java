@@ -17,14 +17,14 @@ import java.util.List;
 @Dao
 public interface SuitedForDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertSuitedFor(SuitedForVO... suitedForVOS);
+    long[] insertSuitedFor(SuitedForVO... suitedForVOs);
 
     @Query("SELECT * FROM suited_for")
-    List<SuitedForVO> getAllSuitedItems();
+    List<SuitedForVO> getAllSuitedFor();
 
-    @Query("SELECT * FROM suited_for WHERE warDeeId = :warDeeId")
-    SuitedForVO getSuitedItemsById(String warDeeId);
+    @Query("SELECT * FROM suited_for WHERE suited_for_id= :suitedForId")
+    SuitedForVO getSuitedForById(String suitedForId);
 
-    @Query("SELECT * FROM suited_for WHERE warDeeId = :warDeeId")
-    LiveData<List<SuitedForVO>> getSuitedItemsLDById(String warDeeId);
+    @Query("SELECT * FROM suited_for WHERE suited_for_id= :suitedForId")
+    LiveData<SuitedForVO> getSuitedForByIdLD(String suitedForId);
 }
